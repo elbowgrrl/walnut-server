@@ -4,12 +4,12 @@ const axios = require("axios");
 const app = express();
 
 //get tags from client
-const tags = "tech";
+const paramsObj = { tag: "tech", sortBy: "reads", direction: "desc" };
 
 // Root route
 app.get("/", (req, res, next) => {
   // console.log("accessing root")
-  res.send("This is the root");
+  res.send("There is nothing here. Try /api/ping or /api/posts");
 });
 
 // Route 1 - ping
@@ -23,9 +23,8 @@ app.get("/api/posts", (req, res, next) => {
   console.log("post route accessed");
   axios
     .get(`https://api.hatchways.io/assessment/blog/posts`, {
-      params: { tag: tags, sortBy: "", direction: "" },
+      params: paramsObj
     })
-    //sort data. Helper functions?
     .then((data) => res.send(data.data.posts))
     //need to send the data to the browser. Why can I log it and not send it to the browser?
     .catch((err) => res.send(err));
